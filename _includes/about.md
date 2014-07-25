@@ -1,25 +1,22 @@
-<p class="message">
-  Hey there! This page is included as an example. Feel free to customize it for your own use upon downloading. Carry on!
-</p>
+<img src="/img/matahi.png" alt="Matahi" width="128" height="128" style="float: right"/> 
 
-In the novel, *The Strange Case of Dr. Jeykll and Mr. Hyde*, Mr. Poole is Dr. Jekyll's virtuous and loyal butler. Similarly, Poole is an upstanding and effective butler that helps you build Jekyll themes. It's made by [@mdo](https://twitter.com/mdo).
+**Matahi MOARII**
 
-There are currently two themes built on Poole:
+Mail: matahi dot moarii at mines-paristech dot fr
 
-* [Hyde](http://hyde.getpoole.com)
-* [Lanyon](http://lanyon.getpoole.com)
+Address: Institut Curie - Centre de recherche biologie du developpement - U900
 
-Learn more and contribute on [GitHub](https://github.com/poole).
+26 rue D'Ulm, 75248 Paris cedex 05, France
 
-## Setup
+About Me
+--------
 
-Some fun facts about the setup of this project include:
+I'm a 3rd year PhD student at the [Center for Computational Biology](http://cbio.ensmp.fr) from the [Ecole Mines Paristech](https://www.mines-paristech.fr) under the supervision of [Jean-Philippe Vert](http://cbio.ensmp.fr/~jvert) and [Fabien Reyal](http://www.linkedin.com/in/fabienreyal). I'm a fellow from the [Ligue Nationale contre le Cancer](http://www.ligue-cancer.net), an French non-profit organization which funds research against cancer in France.
 
-* Built for [Jekyll](http://jekyllrb.com)
-* Developed on GitHub and hosted for free on [GitHub Pages](https://pages.github.com)
-* Coded with [Sublime Text 2](http://sublimetext.org), an amazing code editor
-* Designed and developed while listening to music like [Blood Bros Trilogy](https://soundcloud.com/maddecent/sets/blood-bros-series)
+I'm working on the role of [Epigenetics](http://en.wikipedia.org/wiki/Epigenetics) in particular the role of [DNA Methylation](http://en.wikipedia.org/wiki/DNA_methylation) in gene expression variation using Machine Learning. 
 
-Have questions or suggestions? Feel free to [open an issue on GitHub](https://github.com/poole/issues/new) or [ask me on Twitter](https://twitter.com/mdo).
+I'm mostly interested in:
 
-Thanks for reading!
+* Machine Learning
+* Computational Biology
+* Cancer 

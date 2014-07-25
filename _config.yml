@@ -1,14 +1,14 @@
 # Dependencies
 markdown:         redcarpet
-pygments:         true
+highlighter:      pygments
 
 # Permalinks
 permalink:        pretty
 
 # Setup
-title:            Matahi
-tagline:          'Personal Webpage'
-description:      'Personal webpage'
+# title:            Matahi
+tagline:          'My personal webpage'
+# description:      'My personal webpage'
 url:              http://cbio.ensmp.fr/~mmoarii
 
 author:
