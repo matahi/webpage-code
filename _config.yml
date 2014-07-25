@@ -1,0 +1,24 @@
+# Dependencies
+markdown:         redcarpet
+pygments:         true
+
+# Permalinks
+permalink:        pretty
+
+# Setup
+title:            Matahi
+tagline:          'Personal Webpage'
+description:      'Personal webpage'
+url:              http://cbio.ensmp.fr/~mmoarii
+
+author:
+  name:           'Matahi MOARII'
+  url:            http://cbio.ensmp.fr/~mmoarii
+
+paginate:         1
+
+# Custom vars
+version:          2.0.0
+
+github:
+  repo:           https://github.com/matahi/matahi.github.io
