@@ -4,6 +4,7 @@ highlighter:      pygments
 
 # Permalinks
 permalink:        pretty
+#permalink:        /:categories/:title
 
 # Setup
 # title:            Matahi
@@ -22,3 +23,6 @@ version:          2.0.0
 
 github:
   repo:           https://github.com/matahi/matahi.github.io
+
+# Exclude
+exclude: ['Rakefile']

@@ -4,13 +4,28 @@
  <title></title>
  <link href="http://cbio.ensmp.fr/~mmoarii/atom.xml" rel="self"/>
  <link href="http://cbio.ensmp.fr/~mmoarii/"/>
- <updated>2014-07-25T11:38:46+02:00</updated>
+ <updated>2014-07-31T18:20:08+02:00</updated>
  <id>http://cbio.ensmp.fr/~mmoarii</id>
  <author>
    <name>Matahi MOARII</name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>Epigenomic alterations in breast carcinomas from primary tumor to locoregional recurrences</title>
+   <link href="http://cbio.ensmp.fr/~mmoarii/publi/2014/07/30/epigenomic-alterations-in-breast-carcinomas/"/>
+   <updated>2014-07-30T00:00:00+02:00</updated>
+   <id>http://cbio.ensmp.fr/~mmoarii/publi/2014/07/30/epigenomic-alterations-in-breast-carcinomas</id>
+   <content type="html">&lt;p&gt;&lt;em&gt;Introduction&lt;/em&gt; : Epigenetic modifications such as aberrant DNA methylation has long been associated with tumorogenesis. Little is known, however, about how these modifications appear in cancer progres- sion. Comparing the methylome of breast carcinomas and locoregional evolutions could shed light on this process.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Methods&lt;/em&gt; : The methylome profiles of 48 primary breast carcinomas (PT) and their matched axillary metastases (PT/AM pairs, 20 cases), local recurrences (PT/LR pairs, 17 cases) or contralateral breast carcinomas (PT/CL pairs, 11 cases) were analyzed. Univariate and multivariate analyzes were performed to determine differentially methylated probes (DMPs), and a similarity score was defined to compare methylation profiles. Correlation with copy-number based score was calculated and metastatic-free sur- vival was compared between methods.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Results&lt;/em&gt; : 49 DMPs were found for the PT/AM set, but none for the others (FDR &amp;lt; 5%). Hierarchical clustering clustered 75% of the PT/AM, 47% of the PT/LR, and none of the PT/CL pairs together. A methylation-based score (MS) was defined as a clonality measure. The PT/AM set contained a high proportion of clonal pairs while PT/LR pairs were evenly split between high and low MS score, suggesting two groups : true recurrences (TR) and new primary tumors (NP). CL were classified as new tumors. MS score was significantly correlated with copy-number based scores. There was no significant difference between the metastatic-free survival of groups of patients based on different classifications.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Conclusion&lt;/em&gt; : Epigenomic alterations are well suited to study clonality and track cancer progression. Methylation-based classification of TR and NP performed as well as clinical and copy-number based methods suggesting that these phenomenons are tightly linked.&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>Introducing Hyde</title>
@@ -120,9 +135,9 @@
  
  <entry>
    <title>What's Jekyll?</title>
-   <link href="http://cbio.ensmp.fr/~mmoarii/2012/02/06/whats-jekyll/"/>
+   <link href="http://cbio.ensmp.fr/~mmoarii/test/2012/02/06/whats-jekyll/"/>
    <updated>2012-02-06T00:00:00+01:00</updated>
-   <id>http://cbio.ensmp.fr/~mmoarii/2012/02/06/whats-jekyll</id>
+   <id>http://cbio.ensmp.fr/~mmoarii/test/2012/02/06/whats-jekyll</id>
    <content type="html">&lt;p&gt;&lt;a href=&quot;http://jekyllrb.com&quot;&gt;Jekyll&lt;/a&gt; is a static site generator, an open-source tool for creating simple yet powerful websites of all shapes and sizes. From &lt;a href=&quot;https://github.com/mojombo/jekyll/blob/master/README.markdown&quot;&gt;the project&amp;#39;s readme&lt;/a&gt;:&lt;/p&gt;
 
 &lt;blockquote&gt;
