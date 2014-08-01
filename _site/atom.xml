@@ -4,7 +4,7 @@
  <title></title>
  <link href="http://cbio.ensmp.fr/~mmoarii/atom.xml" rel="self"/>
  <link href="http://cbio.ensmp.fr/~mmoarii/"/>
- <updated>2014-07-31T18:20:08+02:00</updated>
+ <updated>2014-08-01T14:19:36+02:00</updated>
  <id>http://cbio.ensmp.fr/~mmoarii</id>
  <author>
    <name>Matahi MOARII</name>
@@ -24,6 +24,19 @@
 &lt;p&gt;&lt;em&gt;Results&lt;/em&gt; : 49 DMPs were found for the PT/AM set, but none for the others (FDR &amp;lt; 5%). Hierarchical clustering clustered 75% of the PT/AM, 47% of the PT/LR, and none of the PT/CL pairs together. A methylation-based score (MS) was defined as a clonality measure. The PT/AM set contained a high proportion of clonal pairs while PT/LR pairs were evenly split between high and low MS score, suggesting two groups : true recurrences (TR) and new primary tumors (NP). CL were classified as new tumors. MS score was significantly correlated with copy-number based scores. There was no significant difference between the metastatic-free survival of groups of patients based on different classifications.&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;Conclusion&lt;/em&gt; : Epigenomic alterations are well suited to study clonality and track cancer progression. Methylation-based classification of TR and NP performed as well as clinical and copy-number based methods suggesting that these phenomenons are tightly linked.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>bio-info, SVM and Graph-kernels</title>
+   <link href="http://cbio.ensmp.fr/~mmoarii/teaching/2014/05/09/Bioinfo-SVM-Graph-Kernels/"/>
+   <updated>2014-05-09T00:00:00+02:00</updated>
+   <id>http://cbio.ensmp.fr/~mmoarii/teaching/2014/05/09/Bioinfo-SVM-Graph-Kernels</id>
+   <content type="html">&lt;p&gt;&lt;strong&gt;Introduction&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Material&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Practical Session&lt;/strong&gt;&lt;/p&gt;
 </content>
  </entry>
  

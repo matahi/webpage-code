@@ -4,7 +4,6 @@ highlighter:      pygments
 
 # Permalinks
 permalink:        pretty
-#permalink:        /:categories/:title
 
 # Setup
 # title:            Matahi

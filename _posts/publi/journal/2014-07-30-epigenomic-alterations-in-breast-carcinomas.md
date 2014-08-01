@@ -3,6 +3,7 @@ layout: publi
 title: Epigenomic alterations in breast carcinomas from primary tumor to locoregional recurrences
 categories: publi 
 keywords: Breast Cancer, Recurrences, Metastasis, Methylation, Clonality, True Recurrence, New Primary Tumor
+reference: PLoS One (2014 To appear)
 authors: Matahi MOARII, Alice Pinheiro, Brigitte Sigal-Zafrani, Alain Fourquet, Martial Caly, Nicolas Servant, Véronique Stoven, Jean-Philippe Vert, Fabien Reyal
 ---
 
