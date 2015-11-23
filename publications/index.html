@@ -6,11 +6,10 @@ title: Publications
 <h2>Articles</h2>
 
 <ul>
-	{% for post in site.categories['publi'] %}
-	<li><a href="{{ post.url }}">"{{ post.title }}"</a>,<b>{{ post.authors }}</b>, <em>{{ post.reference }}</em>. <a href="{{post.link}}">[External Link]</a></li>
+	{% for post in site.categories['publi-journal'] %}
+	<li><a href="{{ post.url }}">"{{ post.title }}"</a>,<b>{{ post.authors }}</b>, <em>{{ post.journal }}</em>: {{ post.date | date: "%B %Y" }}. <a href="{{post.link}}">[External Link]</a></li>
 	{% endfor %}
 </ul>
 
 
-<h2>Conferences</h2>
 

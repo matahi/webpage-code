@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+	<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-53419684-1', 'auto');
+	ga('send', 'pageview');
+
+</script>
+
+
+	<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <!--
+  <title>
+    
+      CIMP analysis &middot; 
+    
+  </title> -->
+  <title>Matahi</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+	<body class="theme-base-08">
+
+		<div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1></h1>
+      <p class="lead"></p>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li class="sidebar-nav-item">
+        <a href="/">Home</a>
+      </li>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+            <li class="sidebar-nav-item">
+              <a href="/projects/index.html">Projects</a>
+            </li>
+          
+        
+      
+        
+          
+            <li class="sidebar-nav-item">
+              <a href="/publications/index.html">Publications</a>
+            </li>
+          
+        
+      
+        
+          
+            <li class="sidebar-nav-item">
+              <a href="/resume/index.html">Resume</a>
+            </li>
+          
+        
+      
+        
+          
+            <li class="sidebar-nav-item">
+              <a href="/teaching/index.html">Teaching</a>
+            </li>
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    </ul>
+
+    <!-- <p>&copy; 2015. All rights reserved.</p> -->
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+  <h1 class="post-title">CIMP analysis</h1>
+  <span class="post-date">22 Jul 2015</span>
+  <h1>Introduction</h1>
+
+<p>This page contains the pipeline analysis for the &quot;CIMP analysis&quot;. Source code is available <a href="code/CpG.zip">here</a>. The whole analysis can be computed by running the <strong>run_all.R</strong> after data processing.</p>
+
+<h2>Data processing</h2>
+
+<p>Data processing is done by running the <strong>run_all.R</strong> located in <strong>data/src</strong>. The procedure is standard (see report).</p>
+
+<h2>Data analysis</h2>
+
+<h3>Part A: Analysis of average CGI+SS patterns</h3>
+<div class="highlight"><pre><code class="language-r" data-lang="r">DiseaseList <span class="o">&lt;-</span> <span class="kt">c</span><span class="p">((</span><span class="s">&#39;BLCA&#39;</span><span class="p">,</span><span class="s">&#39;BRCA&#39;</span><span class="p">,</span><span class="s">&#39;COAD&#39;</span><span class="p">,</span><span class="s">&#39;LUAD&#39;</span><span class="p">,</span><span class="s">&#39;STAD&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>1)</strong> We first assess CIMP in each tissue using the same methodology on genome-wide methylation profiles by performing hierarchical clustering on the top 5% most variant probes in each disease.</p>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="kn">source</span><span class="p">(</span><span class="s">&#39;fun/analyze_CIMP_all_CGIs.R&#39;</span><span class="p">)</span>
+<span class="kr">for</span> <span class="p">(</span>DiseaseName <span class="kr">in</span> DiseaseList<span class="p">)</span>
+<span class="p">{</span>
+        <span class="kp">print</span><span class="p">(</span>DiseaseName<span class="p">)</span>
+        out <span class="o">&lt;-</span> analyze_CIMP_all_CGIs<span class="p">(</span>DiseaseName<span class="o">=</span>DiseaseName<span class="p">,</span>CIMP.Number <span class="o">=</span> <span class="m">2</span><span class="p">,</span> calc.Var<span class="o">=</span> <span class="bp">T</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>2)</strong> We assess the robustness of the clusters by varying the number of CGIs considered from 1 to 10 percent. At the same time, we also look at the stability of 3 clusters to assess the existence of a CIMP-low phenotype.</p>
+<div class="highlight"><pre><code class="language-r" data-lang="r">var.list <span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">,</span><span class="m">5</span><span class="p">,</span><span class="m">10</span><span class="p">)</span>
+CIMP.list <span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">3</span><span class="p">)</span>
+<span class="kn">source</span><span class="p">(</span><span class="s">&#39;fun/analyze_CIMP_all_CGIs.R&#39;</span><span class="p">)</span>
+<span class="kr">for</span> <span class="p">(</span>CIMP.Number <span class="kr">in</span> CIMP.list<span class="p">)</span>
+<span class="p">{</span>
+        <span class="kr">for</span> <span class="p">(</span>var.thresh <span class="kr">in</span> var.list<span class="p">)</span>
+        <span class="p">{</span>
+                <span class="kr">for</span> <span class="p">(</span>DiseaseName <span class="kr">in</span> DiseaseList<span class="p">)</span>
+                <span class="p">{</span>
+                        <span class="kp">print</span><span class="p">(</span><span class="kp">paste0</span><span class="p">(</span><span class="s">&#39;Analyzing &#39;</span><span class="p">,</span>DiseaseName<span class="p">,</span><span class="s">&#39;...&#39;</span><span class="p">,</span> <span class="s">&#39; with var=&#39;</span><span class="p">,</span>var.thresh<span class="p">,</span><span class="s">&#39;% and CIMP.number=&#39;</span><span class="p">,</span>CIMP.Number<span class="p">))</span>
+                        out <span class="o">&lt;-</span> analyze_CIMP_all_CGIs<span class="p">(</span>DiseaseName<span class="o">=</span>DiseaseName<span class="p">,</span>CIMP.Number <span class="o">=</span> CIMP.Number<span class="p">,</span> calc.Var<span class="o">=</span> <span class="bp">F</span><span class="p">,</span> var.thresh <span class="o">=</span> var.thresh<span class="p">)</span>
+                <span class="p">}</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">### 2.A) Look at cluster robustness</span>
+<span class="kn">source</span><span class="p">(</span><span class="s">&#39;fun/cluster_analysis.R&#39;</span><span class="p">)</span>
+out <span class="o">&lt;-</span> cluster_analysis<span class="p">(</span>DiseaseList<span class="o">=</span>DiseaseList<span class="p">,</span> var.thresh<span class="o">=</span>var.thresh<span class="p">)</span>
+
+<span class="c1">### 2.B) Look at cluster robustness given the var.thresh</span>
+<span class="kn">source</span><span class="p">(</span><span class="s">&#39;fun/cluster_analysis_var.R&#39;</span><span class="p">)</span>
+var.list <span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">2</span><span class="p">,</span><span class="m">5</span><span class="p">,</span><span class="m">10</span><span class="p">)</span>
+
+<span class="kr">for</span> <span class="p">(</span>Disease <span class="kr">in</span> DiseaseList<span class="p">)</span>
+<span class="p">{</span>
+        out <span class="o">&lt;-</span> cluster_analysis_var<span class="p">(</span>DiseaseName<span class="o">=</span>Disease<span class="p">,</span> CIMP.Number<span class="o">=</span><span class="m">3</span><span class="p">,</span> var.list<span class="o">=</span> var.list<span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>3)</strong> We fix the top 5% CGIs to define the CIMP-signature instead of another cutoff as a tradeoff between relevant probes and having a wide enough coverage. We then analyze whether there is a common panel of probes between the tissue-specific CIMP-signature.</p>
+<div class="highlight"><pre><code class="language-r" data-lang="r">var.thresh <span class="o">&lt;-</span> <span class="m">5</span>
+<span class="kn">source</span><span class="p">(</span><span class="s">&#39;fun/compare_panel_all_CGIs.R&#39;</span><span class="p">)</span>
+DiseaseList <span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#39;BRCA&#39;</span><span class="p">,</span><span class="s">&#39;BLCA&#39;</span><span class="p">,</span><span class="s">&#39;COAD&#39;</span><span class="p">,</span><span class="s">&#39;LUAD&#39;</span><span class="p">,</span><span class="s">&#39;STAD&#39;</span><span class="p">)</span>
+out <span class="o">&lt;-</span> compare_panel_all_CGIs<span class="p">(</span>DiseaseList<span class="p">,</span> var.thresh<span class="o">=</span>var.thresh<span class="p">)</span>
+</code></pre></div>
+<p>We obtain a subset of 89 CGIs common between all the CIMP-signatures.</p>
+
+<p><strong>4)</strong> By combining the samples from the different tissues, we then perform clustering on this common CIMP-signature:</p>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="kn">source</span><span class="p">(</span><span class="s">&#39;fun/analyze_CIMP_all_CGIs_bis.R&#39;</span><span class="p">)</span>
+out <span class="o">&lt;-</span> analyze_CIMP_all_CGIs_bis<span class="p">(</span>DiseaseList<span class="p">,</span>CIMP.Number <span class="o">=</span> <span class="m">2</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>4)</strong> We then analyze whether the methylation aberrations can be associated with transcriptomic or genetic variations: </p>
+
+<p><strong>4.A)</strong> Can we assess CIMP from gene expression variations i.e CIMP=f(Gene Expression)?</p>
+
+<p>We propose to tackle this problem using a sparse logistic regression with different formulations:</p>
+
+<p><strong>i.</strong> In the first case we predict the CIMP status for each tissue separately: </p>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="kn">source</span><span class="p">(</span><span class="s">&#39;fun/predict_CIMP_GE_glmnet.R&#39;</span><span class="p">)</span>
+<span class="kr">for</span> <span class="p">(</span>DiseaseName <span class="kr">in</span> DiseaseList<span class="p">)</span>
+<span class="p">{</span>
+        <span class="kp">print</span><span class="p">(</span>DiseaseName<span class="p">)</span>
+        out <span class="o">&lt;-</span> predict_CIMP_GE<span class="p">(</span>DiseaseName<span class="p">,</span> var.thresh<span class="o">=</span>var.thresh<span class="p">,</span> CIMP.Number<span class="o">=</span><span class="m">2</span><span class="p">,</span> centered<span class="o">=</span><span class="bp">T</span><span class="p">,</span> scaled<span class="o">=</span><span class="bp">T</span><span class="p">,</span> intercept<span class="o">=</span><span class="bp">T</span><span class="p">,</span> n.folds<span class="o">=</span><span class="m">3</span><span class="p">,</span> bootstrap<span class="o">=</span><span class="m">100</span><span class="p">,</span> cores<span class="o">=</span><span class="m">10</span><span class="p">,</span> log_exp<span class="o">=</span><span class="bp">T</span><span class="p">,</span> balanced<span class="o">=</span><span class="bp">T</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>ii.</strong> In the second case we compute a single classifier for all datasets:</p>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="kn">source</span><span class="p">(</span><span class="s">&#39;fun/predict_CIMP_GE_all.R&#39;</span><span class="p">)</span>
+out <span class="o">&lt;-</span> predict_CIMP_GE_all<span class="p">(</span>DiseaseList<span class="p">,</span> var.thresh<span class="o">=</span>var.thresh<span class="p">,</span> CIMP.Number<span class="o">=</span><span class="m">2</span><span class="p">,</span> centered<span class="o">=</span><span class="bp">T</span><span class="p">,</span> scaled<span class="o">=</span><span class="bp">T</span><span class="p">,</span> intercept<span class="o">=</span><span class="bp">T</span><span class="p">,</span> n.folds<span class="o">=</span><span class="m">3</span><span class="p">,</span> bootstrap<span class="o">=</span><span class="m">100</span><span class="p">,</span> cores<span class="o">=</span><span class="m">10</span><span class="p">,</span> log_exp<span class="o">=</span><span class="bp">T</span><span class="p">,</span> balanced<span class="o">=</span><span class="bp">T</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>iii.</strong> Finally, in the last case we relax the previous constraint (single classifier) by forcing each tissue-specific predictor to have the same non-zero coefficients but allowing the coefficients to vary:</p>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="kn">source</span><span class="p">(</span><span class="s">&#39;fun/predict_CIMP_GE_MT_par.R&#39;</span><span class="p">)</span>
+out <span class="o">&lt;-</span> predict_CIMP_GE_MT<span class="p">(</span>DiseaseList<span class="p">,</span> var.thresh<span class="o">=</span>var.thresh<span class="p">,</span> CIMP.Number<span class="o">=</span><span class="m">2</span><span class="p">,</span> centered<span class="o">=</span><span class="bp">T</span><span class="p">,</span> scaled<span class="o">=</span><span class="bp">T</span><span class="p">,</span> intercept<span class="o">=</span><span class="bp">T</span><span class="p">,</span>  n.folds<span class="o">=</span><span class="m">3</span><span class="p">,</span> bootstrap<span class="o">=</span><span class="m">100</span><span class="p">,</span> cores<span class="o">=</span><span class="m">10</span><span class="p">,</span> balanced<span class="o">=</span><span class="bp">T</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>iv.</strong> Summary of the results: </p>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="kn">source</span><span class="p">(</span><span class="s">&#39;fun/analyze_predict_CIMP_GE_MT.R&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>4.B)</strong> Analysis of the mutations associated with CIMP:</p>
+
+<p><strong>i)</strong> We analyzed the the association between CIMP and known reported mutations associated with tissue-specific CIMPs (<em>e.g</em> <em>BRAF</em>, <em>KRAS</em>, <em>IDH1</em>, <em>IDH2</em>, <em>TET2</em>).</p>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="kn">source</span><span class="p">(</span><span class="s">&#39;fun/analyze_mutations.R&#39;</span><span class="p">)</span>
+Mutation.List <span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#39;BRAF&#39;</span><span class="p">,</span><span class="s">&#39;KRAS&#39;</span><span class="p">,</span><span class="s">&#39;IDH1&#39;</span><span class="p">,</span><span class="s">&#39;IDH2&#39;</span><span class="p">,</span><span class="s">&#39;TET2&#39;</span><span class="p">)</span>
+
+analyze_mutations<span class="p">(</span>DiseaseList<span class="p">,</span> Mutation.List<span class="o">=</span>Mutation.List<span class="p">)</span>
+</code></pre></div>
+<p><strong>ii)</strong> We then also searched for other mutations significantly associated with CIMP in all diseases: 
+<code>{r}
+source(&#39;fun/analyze_mutations.R&#39;)
+analyze_mutations(DiseaseList, Mutation.List=Mutation.List)
+</code></p>
+
+<p><strong>5)</strong> Survival analysis</p>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="kn">source</span><span class="p">(</span><span class="s">&#39;fun/compare_clinical.R&#39;</span><span class="p">)</span>
+<span class="kr">for</span> <span class="p">(</span>DiseaseName <span class="kr">in</span> DiseaseList<span class="p">)</span>
+<span class="p">{</span>
+        <span class="kp">print</span><span class="p">(</span>DiseaseName<span class="p">)</span>
+        out <span class="o">&lt;-</span> compare_clinical<span class="p">(</span>DiseaseName<span class="o">=</span>DiseaseName<span class="p">,</span> var.thresh<span class="o">=</span>var.thresh<span class="p">,</span> CIMP.Number<span class="o">=</span> CIMP.Number<span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+</div>
+
+
+
+		</div>
+
+	</body>
+</html>

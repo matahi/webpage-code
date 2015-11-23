@@ -1,0 +1,23 @@
+---
+layout: page
+title: Projects
+---
+
+<h2>2015</h2>
+<ul>
+	{% for post in site.categories['projects-2015'] %}
+	<li><a href="{{ post.url }}">"{{ post.title }}"</a>, {{ post.location }}, {{ post.date | date: "%B" }}.
+	{% endfor %}
+</ul>
+
+
+<h2>2014</h2>
+
+<ul>
+	{% for post in site.categories['projects-2014'] %}
+	<li><a href="{{ post.url }}">"{{ post.title }}"</a>, {{ post.location }}, {{ post.date | date: "%B" }}.
+	{% endfor %}
+</ul>
+
+
+

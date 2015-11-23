@@ -1,4 +1,4 @@
-<img src="/img/matahi.png" alt="Matahi" width="128" height="128" style="float: right"/> 
+<img src="/img/matahi.png" alt="Matahi" width="190" height="256" style="float: right"/> 
 
 **Matahi MOARII**
 

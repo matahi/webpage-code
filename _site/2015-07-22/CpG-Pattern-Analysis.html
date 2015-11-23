@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+	<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-53419684-1', 'auto');
+	ga('send', 'pageview');
+
+</script>
+
+
+	<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <!--
+  <title>
+    
+      CpG Pattern analysis &middot; 
+    
+  </title> -->
+  <title>Matahi</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+	<body class="theme-base-08">
+
+		<div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1></h1>
+      <p class="lead"></p>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li class="sidebar-nav-item">
+        <a href="/">Home</a>
+      </li>
+
+      
+
+      
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+            <li class="sidebar-nav-item">
+              <a href="/projects/index.html">Projects</a>
+            </li>
+          
+        
+      
+        
+          
+            <li class="sidebar-nav-item">
+              <a href="/publications/index.html">Publications</a>
+            </li>
+          
+        
+      
+        
+          
+            <li class="sidebar-nav-item">
+              <a href="/resume/index.html">Resume</a>
+            </li>
+          
+        
+      
+        
+          
+            <li class="sidebar-nav-item">
+              <a href="/teaching/index.html">Teaching</a>
+            </li>
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    </ul>
+
+    <!-- <p>&copy; 2015. All rights reserved.</p> -->
+  </div>
+</div>
+
+
+		<div class="content container">
+			<div class="post">
+  <h1 class="post-title">CpG Pattern analysis</h1>
+  <span class="post-date">22 Jul 2015</span>
+  <h1>Introduction</h1>
+
+<p>This page contains the pipeline analysis for the &quot;CpG pattern analysis&quot;. Source code is available <a href="code/CpG.zip">here</a>. The whole analysis can be computed by running the <strong>run_all.R</strong></p>
+
+<h2>Data processing</h2>
+
+<h2>Data analysis</h2>
+
+<h3>Part A: Analysis of average CGI+SS patterns</h3>
+
+<p>In the first part, we compare the average CGI+SS profiles for a given dataset (<strong>i.e</strong> Cancerous breast) across the genome to assess whether specific CGI+SS profiles exist and whether they are associated with any specific gene expression levels.</p>
+<div class="highlight"><pre><code class="language-r" data-lang="r">DiseaseList <span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#39;BRCA&#39;</span><span class="p">,</span><span class="s">&#39;COAD&#39;</span><span class="p">,</span><span class="s">&#39;LUAD&#39;</span><span class="p">)</span>
+Type <span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#39;Cancerous&#39;</span><span class="p">,</span><span class="s">&#39;Normal&#39;</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>A.1)</strong> Filter CGI+SS with at least 20 probes:</p>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="kp">load</span><span class="p">(</span><span class="s">&quot;../../data/processed/fData/CpGIslands_probe_size.RData&quot;</span><span class="p">)</span>
+list_big_island <span class="o">&lt;-</span> <span class="kp">which</span><span class="p">(</span>CpGIslands.probesize <span class="o">&gt;=</span><span class="m">20</span><span class="p">)</span>
+</code></pre></div>
+<p>This reduces the number of CGIs studied from 27K to 1827 CGIs.</p>
+
+<p><strong>A.2)</strong> For each type of tissue and each CGI+SS, we calculate a probewise average profile:</p>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="kn">source</span><span class="p">(</span><span class="s">&#39;fun/calculate_Mean_PC.R&#39;</span><span class="p">)</span>
+<span class="kr">for</span> <span class="p">(</span>DiseaseName <span class="kr">in</span> DiseaseList<span class="p">)</span>
+<span class="p">{</span>
+        out <span class="o">&lt;-</span> calculate_Mean_PC<span class="p">(</span>Disease<span class="o">=</span>DiseaseName<span class="p">,</span>type<span class="o">=</span><span class="s">&quot;Cancerous&quot;</span><span class="p">,</span>proc<span class="o">=</span><span class="bp">F</span><span class="p">)</span>
+        out <span class="o">&lt;-</span> calculate_Mean_PC<span class="p">(</span>Disease<span class="o">=</span>DiseaseName<span class="p">,</span>type<span class="o">=</span><span class="s">&quot;Normal&quot;</span><span class="p">,</span>proc<span class="o">=</span><span class="bp">F</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>A.3)</strong> We then perform dynamic time warping to assess for a given tissue and type (normal or cancerous) the distance between two different CGI+SS profiles:</p>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="kn">source</span><span class="p">(</span><span class="s">&#39;fun/calculate_Mean_PC.R&#39;</span><span class="p">)</span>
+<span class="kr">for</span> <span class="p">(</span>DiseaseName <span class="kr">in</span> DiseaseList<span class="p">)</span>
+<span class="p">{</span>
+        out <span class="o">&lt;-</span> calculate_Mean_PC<span class="p">(</span>Disease<span class="o">=</span>DiseaseName<span class="p">,</span>type<span class="o">=</span><span class="s">&quot;Cancerous&quot;</span><span class="p">,</span>proc<span class="o">=</span><span class="bp">F</span><span class="p">)</span>
+        out <span class="o">&lt;-</span> calculate_Mean_PC<span class="p">(</span>Disease<span class="o">=</span>DiseaseName<span class="p">,</span>type<span class="o">=</span><span class="s">&quot;Normal&quot;</span><span class="p">,</span>proc<span class="o">=</span><span class="bp">F</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>This outputs a 1827 x 1827 matrix that gives the DTW distance between all CGI+SS profiles</p>
+
+<p><strong>A.4)</strong> We then perform a hierarchical clustering (linkage=Ward):</p>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="kn">source</span><span class="p">(</span><span class="s">&#39;fun/CGI_analysis.R&#39;</span><span class="p">)</span>
+<span class="kr">for</span> <span class="p">(</span>DiseaseName <span class="kr">in</span> DiseaseList<span class="p">)</span>
+<span class="p">{</span>
+        out <span class="o">&lt;-</span> analyze_CGI_clusters<span class="p">(</span>Disease<span class="o">=</span>DiseaseName<span class="p">,</span>cutoff<span class="o">=</span><span class="m">3</span><span class="p">,</span>type<span class="o">=</span><span class="s">&quot;Cancerous&quot;</span><span class="p">)</span>
+        out <span class="o">&lt;-</span> analyze_CGI_clusters<span class="p">(</span>Disease<span class="o">=</span>DiseaseName<span class="p">,</span>cutoff<span class="o">=</span><span class="m">2</span><span class="p">,</span>type<span class="o">=</span><span class="s">&quot;Normal&quot;</span><span class="p">)</span>
+        <span class="c1">## Value for cutoff (i.e number of clusters is given by the hierarchical clustering)</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>We observe 2 and 3 clusters of CGI+SS profiles for normal and cancerous tissues respectively.</p>
+
+<p><strong>A.5)</strong> We plot the characteristic profiles in each cluster i.e the CGI+SS profiles with the lowest mean distance with other CGI+SS profiles in the cluster:</p>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="kn">source</span><span class="p">(</span><span class="s">&#39;fun/plot_characteristic_profiles.R&#39;</span><span class="p">)</span>
+<span class="kr">for</span> <span class="p">(</span>DiseaseName <span class="kr">in</span> DiseaseList<span class="p">)</span>
+<span class="p">{</span>
+        out <span class="o">&lt;-</span> plot_characteristic_profiles<span class="p">(</span>Disease<span class="o">=</span>DiseaseName<span class="p">,</span>type<span class="o">=</span><span class="s">&quot;Cancerous&quot;</span><span class="p">)</span>
+        out <span class="o">&lt;-</span> plot_characteristic_profiles<span class="p">(</span>Disease<span class="o">=</span>DiseaseName<span class="p">,</span>type<span class="o">=</span><span class="s">&quot;Normal&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>A.6)</strong> We assess whether a given CGI+SS is clustered in the same cluster in normal or cancerous tissues:</p>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="kn">source</span><span class="p">(</span><span class="s">&#39;fun/compare_clusters.R&#39;</span><span class="p">)</span>
+<span class="kr">for</span> <span class="p">(</span>DiseaseName <span class="kr">in</span> DiseaseList<span class="p">)</span>
+<span class="p">{</span>
+        compare_clusters<span class="p">(</span>Disease1<span class="o">=</span>DiseaseName<span class="p">,</span>type1<span class="o">=</span><span class="s">&quot;Cancerous&quot;</span><span class="p">,</span> analysis<span class="o">=</span><span class="s">&quot;Mean&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Clusters are mostly stable between normal and cancerous tissues beside the cancerous-specific cluster that is derived from CGI+SS coming from cluster 1 and 2 in normal tissues.</p>
+
+<p><strong>A.7)</strong> We then assess whether a given CGI+SS is clustered in the same cluster between different tissues:</p>
+<div class="highlight"><pre><code class="language-r" data-lang="r">DiseaseListbis <span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span>DiseaseList<span class="p">,</span> DiseaseList<span class="p">[</span><span class="m">1</span><span class="p">])</span>
+<span class="kr">for</span> <span class="p">(</span>k <span class="kr">in</span> <span class="m">1</span><span class="o">:</span><span class="p">(</span><span class="kp">length</span><span class="p">(</span>DiseaseList<span class="p">)</span><span class="m">-1</span><span class="p">))</span>
+<span class="p">{</span>
+        compare_clusters<span class="p">(</span>Disease1<span class="o">=</span>DiseaseList<span class="p">[</span>k<span class="p">],</span>Disease2<span class="o">=</span>DiseaseList<span class="p">[</span>k<span class="m">+1</span><span class="p">],</span>type1<span class="o">=</span><span class="s">&quot;Normal&quot;</span><span class="p">,</span> analysis<span class="o">=</span><span class="s">&quot;Mean&quot;</span><span class="p">)</span>
+        compare_clusters<span class="p">(</span>Disease1<span class="o">=</span>DiseaseList<span class="p">[</span>k<span class="p">],</span>Disease2<span class="o">=</span>DiseaseList<span class="p">[</span>k<span class="m">+1</span><span class="p">],</span>type1<span class="o">=</span><span class="s">&quot;Cancerous&quot;</span><span class="p">,</span> analysis<span class="o">=</span><span class="s">&quot;Mean&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Clusters are less stable between tissues!</p>
+
+<p><strong>A.8)</strong> Finally we look at the link between the CGI+SS patterns and gene expression levels</p>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="kn">source</span><span class="p">(</span><span class="s">&#39;fun/compare_GE_clusters.R&#39;</span><span class="p">)</span>
+<span class="kr">for</span> <span class="p">(</span>DiseaseName <span class="kr">in</span> DiseaseList<span class="p">)</span>
+<span class="p">{</span>
+        compare_GE_clusters<span class="p">(</span>DiseaseName<span class="o">=</span> DiseaseName<span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+<ul>
+<li>In normal tissue, CGI+SS in cluster 2 (hypermethylated CGIs) are not significantly less expressed than CGI+SS in cluster 1 (hypomethylated CGIs)</li>
+<li>In cancerous tissues, we observe that genes associated with cluster 3 are significantly repressed compared to genes associated with cluster 1 and 2.</li>
+<li>Using the clustering of CGI+SS associated with cancerous tissues, and looking at the gene expression distribution in normal tissues, we observe that the genes associated with cluster 3 are also repressed in normal tissues (although the CGI+SS clustering in normal tissues do not have a cluster 3 i.e the CGI+SS are either hypo/hypermethylated). This suggests that overall methylation variations might not be causal in the repression of the genes associated.</li>
+</ul>
+
+<h3>Part B: Inter-individual methylation variations to predict gene expression variations</h3>
+
+<p>Average methylation patterns were not associated with gene expression variations. In the second part, we look the power of inter-individual methylation variations (in the CGI+SS) in a specific dataset, to predict the gene expression variations of the associated genes.</p>
+
+<p><strong>B.1)</strong> We build a regression setting where we assess the predictive power of methylation variations to predict gene expression variations.</p>
+
+<p>We assess the predictive power by performing, for each dataset and for each CGI+SS, a cross-validation procedure (nfolds=3) where we train the parameter of a Lasso on 2/3 of the dataset and we test the prediction on the remaining 1/3 of the dataset.
+The performance is assessed with R^2= cor(yhat, ytest)^2 which is a value between 0 and 1 with 1 being the highest. We bootstrap the prediction procedure (nboostrap=100) and we get a final average R^2 for each gene.</p>
+
+<p>We assess the predictive power using only the mean CGI information or the full CGI+SS information. Supplementary analyses include all the CGIs associated with a gene or taking the full methylome to predict the gene expression or just the methylation level of the associated chromosome.</p>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="kn">source</span><span class="p">(</span><span class="s">&quot;fun/predict_GE.R&quot;</span><span class="p">)</span>
+<span class="kr">for</span> <span class="p">(</span>DiseaseName <span class="kr">in</span> DiseaseList<span class="p">)</span>
+<span class="p">{</span>
+        predict_GE<span class="p">(</span>DiseaseName<span class="o">=</span> DiseaseName<span class="p">,</span> type<span class="o">=</span><span class="s">&quot;Cancerous&quot;</span><span class="p">,</span> preprocessing<span class="o">=</span><span class="s">&quot;CGIs&quot;</span><span class="p">,</span> MethylationAnalysis<span class="o">=</span><span class="s">&quot;Mean&quot;</span><span class="p">)</span>
+        predict_GE<span class="p">(</span>DiseaseName<span class="o">=</span> DiseaseName<span class="p">,</span> type<span class="o">=</span><span class="s">&quot;Normal&quot;</span><span class="p">,</span> preprocessing<span class="o">=</span><span class="s">&quot;CGIs&quot;</span><span class="p">,</span> MethylationAnalysis<span class="o">=</span><span class="s">&quot;Mean&quot;</span><span class="p">)</span>
+
+
+        predict_GE<span class="p">(</span>DiseaseName<span class="o">=</span> DiseaseName<span class="p">,</span> type<span class="o">=</span><span class="s">&quot;Cancerous&quot;</span><span class="p">,</span> preprocessing<span class="o">=</span><span class="s">&quot;CGIs&quot;</span><span class="p">,</span> MethylationAnalysis<span class="o">=</span><span class="s">&quot;Promoter&quot;</span><span class="p">)</span>
+        predict_GE<span class="p">(</span>DiseaseName<span class="o">=</span> DiseaseName<span class="p">,</span> type<span class="o">=</span><span class="s">&quot;Normal&quot;</span><span class="p">,</span> preprocessing<span class="o">=</span><span class="s">&quot;CGIs&quot;</span><span class="p">,</span> MethylationAnalysis<span class="o">=</span><span class="s">&quot;Promoter&quot;</span><span class="p">)</span>
+
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>B.2)</strong> Summary of the results:</p>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="kn">source</span><span class="p">(</span><span class="s">&#39;fun/analyze_prediction.R&#39;</span><span class="p">)</span>
+<span class="kr">for</span> <span class="p">(</span>DiseaseName <span class="kr">in</span> DiseaseList<span class="p">)</span>
+<span class="p">{</span>
+        analyze_prediction<span class="p">(</span>DiseaseName<span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>B.3)</strong> We also had the CNV information in the regression model to assess whether the performance in improved (nfolds=3, nboostrap=100):</p>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="kn">source</span><span class="p">(</span><span class="s">&quot;fun/predict_GE_CNV.R&quot;</span><span class="p">)</span>
+<span class="kr">for</span> <span class="p">(</span>DiseaseName <span class="kr">in</span> DiseaseList<span class="p">)</span>
+<span class="p">{</span>
+        predict_GE_CNV<span class="p">(</span>DiseaseName<span class="o">=</span> DiseaseName<span class="p">,</span> type<span class="o">=</span><span class="s">&quot;Cancerous&quot;</span><span class="p">,</span> preprocessing<span class="o">=</span><span class="s">&quot;CGIs&quot;</span><span class="p">,</span> MethylationAnalysis<span class="o">=</span><span class="s">&quot;Mean&quot;</span><span class="p">)</span>
+        predict_GE_CNV<span class="p">(</span>DiseaseName<span class="o">=</span> DiseaseName<span class="p">,</span> type<span class="o">=</span><span class="s">&quot;Normal&quot;</span><span class="p">,</span> preprocessing<span class="o">=</span><span class="s">&quot;CGIs&quot;</span><span class="p">,</span> MethylationAnalysis<span class="o">=</span><span class="s">&quot;Mean&quot;</span><span class="p">)</span>
+
+
+        predict_GE_CNV<span class="p">(</span>DiseaseName<span class="o">=</span> DiseaseName<span class="p">,</span> type<span class="o">=</span><span class="s">&quot;Cancerous&quot;</span><span class="p">,</span> preprocessing<span class="o">=</span><span class="s">&quot;CGIs&quot;</span><span class="p">,</span> MethylationAnalysis<span class="o">=</span><span class="s">&quot;Promoter&quot;</span><span class="p">)</span>
+        predict_GE_CNV<span class="p">(</span>DiseaseName<span class="o">=</span> DiseaseName<span class="p">,</span> type<span class="o">=</span><span class="s">&quot;Normal&quot;</span><span class="p">,</span> preprocessing<span class="o">=</span><span class="s">&quot;CGIs&quot;</span><span class="p">,</span> MethylationAnalysis<span class="o">=</span><span class="s">&quot;Promoter&quot;</span><span class="p">)</span>
+
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>B.4)</strong> Summary of the results:</p>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="kn">source</span><span class="p">(</span><span class="s">&#39;fun/analyze_prediction_CNV.R&#39;</span><span class="p">)</span>
+<span class="kr">for</span> <span class="p">(</span>DiseaseName <span class="kr">in</span> DiseaseList<span class="p">)</span>
+<span class="p">{</span>
+        analyze_prediction_CNV<span class="p">(</span>DiseaseName<span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>B.5)</strong> We then compare the prediction performance with noCNV info:</p>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="kn">source</span><span class="p">(</span><span class="s">&#39;fun/compare_prediction_Normal_Cancerous.R&#39;</span><span class="p">)</span>
+<span class="kr">for</span> <span class="p">(</span>DiseaseName <span class="kr">in</span> DiseaseList<span class="p">)</span>
+<span class="p">{</span>
+        compare_prediction_CNV_noCNV<span class="p">(</span>DiseaseName<span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>B.6)</strong> We compare the prediction performance between different tissues:</p>
+<div class="highlight"><pre><code class="language-r" data-lang="r"><span class="kn">source</span><span class="p">(</span><span class="s">&#39;fun/compare_prediction_interCancer.R&#39;</span><span class="p">)</span>
+compare_prediction_interCancer<span class="p">()</span>
+</code></pre></div>
+</div>
+
+
+
+		</div>
+
+	</body>
+</html>
